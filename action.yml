@@ -1,0 +1,55 @@
+name: 'SignClientRunner'
+description: 'Runs the SignClient DotNet global client which will run authenticode signing.'
+author: 'Glenn Watson'
+inputs:
+  tool-version:
+    description: The NuGet global tool version number for Sign Client. By default uses latest.
+    required: false
+  follow-symbolic-links:
+    description: 'Indicates whether to follow symbolic links'
+    default: 'true'
+    required: false
+  config-file:
+    description: A configuration file for the signing.
+    required: true
+  input-files:
+    description: 'Files to sign'
+    required: true
+  base-directory:
+    description: 'The base directory for files to override the working directory'
+    required: false
+  output-path:
+    description: >
+      The path to the put file.
+      May be the same as the input to overwrite.
+      If not specified will be the input file.
+    required: false
+  file-list-file:
+    description: A path to a list of files to sign within within the archive.
+    required: false
+  sign-client-secret:
+    description: >
+      The sign client secret needed for signing.
+      You will likely want this as a GitHub secret.
+    required: true    
+  sign-client-user:
+    description: >
+      The sign client user needed for signing.
+      You will likely want this as a GitHub secret.
+    required: true    
+  project-name:
+    description: Name of project for tracking
+    required: true    
+  description:
+    description: Description of the project.
+    required: false    
+  description-url:
+    description: Description of the project in url
+    required: false
+  max-concurrency:
+    description: The maximum number of threads running (defaults to 4).
+    required: false
+    default: '4'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
