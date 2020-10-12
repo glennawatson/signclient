@@ -36,6 +36,7 @@ async function run(): Promise<void> {
     const globber = await glob.create(files, globOptions);
 
     const defaultArgs = [
+      'sign',
       '-s',
       Inputs.secret,
       '-r',
