@@ -69,12 +69,9 @@ async function run(): Promise<void> {
     for await (const file of globber.globGenerator()) {
       const runArgs = [...defaultArgs];
       runArgs.push('-i', file);
+      runArgs.push('-o', file);
 
-      exitCode = await exec('SignClient', runArgs);
-
-      if (exitCode > 1) {
-        core.warning(`could not sign package ${file}`);
-      }
+      await exec('SignClient', runArgs);
     }
   } catch (error) {
     core.setFailed(error.message);
