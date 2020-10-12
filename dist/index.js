@@ -285,7 +285,7 @@ function run() {
             if (settings_1.Inputs.toolVersion) {
                 installArgs.push('--version', settings_1.Inputs.toolVersion);
             }
-            let exitCode = yield exec_1.exec('dotnet', installArgs, {
+            const exitCode = yield exec_1.exec('dotnet', installArgs, {
                 ignoreReturnCode: true
             });
             if (exitCode > 1) {
@@ -301,6 +301,7 @@ function run() {
             };
             const globber = yield glob.create(files, globOptions);
             const defaultArgs = [
+                'sign',
                 '-s',
                 settings_1.Inputs.secret,
                 '-r',
@@ -330,10 +331,8 @@ function run() {
                     const file = _c.value;
                     const runArgs = [...defaultArgs];
                     runArgs.push('-i', file);
-                    exitCode = yield exec_1.exec('SignClient', runArgs);
-                    if (exitCode > 1) {
-                        core.warning(`could not sign package ${file}`);
-                    }
+                    runArgs.push('-o', file);
+                    yield exec_1.exec('SignClient', runArgs);
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -1354,7 +1353,7 @@ class Inputs {
         return parseInt(result);
     }
     static get toolVersion() {
-        const result = core.getInput('toolVersion');
+        const result = core.getInput('tool-version');
         return result === '' || result === null ? undefined : result;
     }
 }

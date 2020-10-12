@@ -13,7 +13,7 @@ async function run(): Promise<void> {
       installArgs.push('--version', Inputs.toolVersion);
     }
 
-    let exitCode = await exec('dotnet', installArgs, {
+    const exitCode = await exec('dotnet', installArgs, {
       ignoreReturnCode: true
     });
     if (exitCode > 1) {
