@@ -53,3 +53,6 @@ inputs:
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  icon: at-sign
+  color: 'gray-dark'  
