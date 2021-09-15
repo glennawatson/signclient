@@ -1,9 +1,9 @@
 import * as core from '@actions/core';
-import * as path from 'path';
-import * as os from 'os';
 import * as glob from '@actions/glob';
-import {exec} from '@actions/exec';
+import * as os from 'os';
+import * as path from 'path';
 import {Inputs} from './settings';
+import {exec} from '@actions/exec';
 
 async function run(): Promise<void> {
   try {
@@ -74,8 +74,12 @@ async function run(): Promise<void> {
 
       await exec('SignClient', runArgs);
     }
-  } catch (error) {
-    core.setFailed(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      core.setFailed(error);
+    } else {
+      core.setFailed('');
+    }
   }
 }
 
